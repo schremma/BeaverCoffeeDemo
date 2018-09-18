@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="BeaverCoffeeDemo.RegisterCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BeaverCoffeeDemo.ValidationRules"
+        mc:Ignorable="d"
+        Height="500" Width="500" Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.Resources>
+            <ControlTemplate x:Key="validationErrorTemplate">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <Grid Width="12" Height="12">
+                            <Ellipse Width="12" Height="12" 
+            Fill="Red" HorizontalAlignment="Center" 
+            VerticalAlignment="Center"></Ellipse>
+                            <TextBlock Foreground="White" FontWeight="Heavy" 
+            FontSize="8" HorizontalAlignment="Center" 
+            VerticalAlignment="Center" TextAlignment="Center"
+                       ToolTip="{Binding ElementName=ErrorAdorner, 
+                       Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                       >X</TextBlock>
+                        </Grid>
+                        <TextBlock Foreground="Red" FontWeight="DemiBold" Margin="2,0,0,0" 
+                   Text="{Binding ElementName=ErrorAdorner, 
+                   Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                   ></TextBlock>
+                    </StackPanel>
+                    <AdornedElementPlaceholder 
+        x:Name="ErrorAdorner" ></AdornedElementPlaceholder>
+                </DockPanel>
+            </ControlTemplate>
+        </Grid.Resources>
+        <Grid Margin="0, 30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.7*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Content="Name"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="Personal identification"/>
+            <Label Grid.Column="0" Grid.Row="2" Content="Address: street"/>
+            <Label Grid.Column="0" Grid.Row="3" Content="Zip"/>
+            <Label Grid.Column="0" Grid.Row="4" Content="City"/>
+            <Label Grid.Column="0" Grid.Row="5" Content="Country"/>
+            <Label Grid.Column="0" Grid.Row="6" Content="Occupation"/>
+            <TextBox Name ="txtName" Grid.Column="1" Grid.Row="0" Margin="5,12,0,5" Height="18" MinWidth="300" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <local:GeneralValidation/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Name="txtPersonalId" Grid.Column="1" Grid.Row="1" Margin="5,12,0,5" Height="18" MinWidth="300" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="PersonalId" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <local:IdFormatValidation/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Name="txtStreet" Grid.Column="1" Grid.Row="2" Margin="5,12,0,5" Height="18" MinWidth="300" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Address.Street" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <local:GeneralValidation/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Name="txtZip" Grid.Column="1" Grid.Row="3" Margin="5,12,0,5" Height="18" MinWidth="300" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+            <TextBox.Text>
+                <Binding Path="Address.Zip" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:GeneralValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            </TextBox>
+            <TextBox Text="{Binding Path=Address.City, Mode=TwoWay}" Grid.Column="1" Grid.Row="4" Margin="5,12,0,5" Height="18" MinWidth="300" HorizontalAlignment="Left"/>
+            <TextBox Text="{Binding Path=Address.Country, Mode=TwoWay}" Grid.Column="1" Grid.Row="5" Margin="5,12,0,5" Height="18" MinWidth="300" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Column="1" Grid.Row="6" Name="cbOccupations" HorizontalAlignment="Left"  Width="120" Margin="5,12,0,5" Height="22" VerticalAlignment="Center"/>
+            <Button Name="btnSave" Content="Save customer"  Grid.Column="1" Grid.Row="8" Width="120" Height="30" Margin="10" HorizontalAlignment="Right" Background="#FFF5EFEF" Click="btnSave_Click"></Button>
+            <Button Name="btnBack" Content="Back to menu"  Grid.Column="0" Grid.Row="8" Width="120" Height="30" Margin="5,10" HorizontalAlignment="Left" Click="btnBack_Click"></Button>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="BeaverCoffeeDemo.AnalyticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BeaverCoffeeDemo"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="650">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.35*"/>
+            <ColumnDefinition Width="0.35*"/>
+            <ColumnDefinition Width="0.3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Location: " Grid.Column="0" Grid.Row="0" Margin="5" Width="Auto"/>
+        <ComboBox Name="cbLocations"  ItemsSource="{Binding Locations}" DisplayMemberPath="Name" Grid.Column="0" Grid.Row="0" Margin="70,5,5,5" Height="30" Width="Auto" SelectionChanged="cbLocations_SelectionChanged" />
+        <Label Content="Action: " Grid.Column="1" Grid.Row="0" Margin="5" Width="Auto"/>
+        <ComboBox Name="cbAction" DisplayMemberPath="Item2" Grid.Column="1" Grid.Row="0" Margin="70,5,5,5" Height="30" Width="Auto" SelectionChanged="cbAction_SelectionChanged" />
+
+        <ComboBox Name="cbStockItems" DisplayMemberPath="Name" Grid.Column="2" Grid.Row="0"  Height="30" Margin="5" Width="Auto" />
+
+        <Label Content="Start date" Grid.Row="1"/>
+        <DatePicker Name="datePickerStart" Margin="70,5,5,5" Grid.Row="1"/>
+        <Label Content="End date" Grid.Column="1" Grid.Row="1"/>
+        <DatePicker Name="datePickerEnd" Grid.Column="1" Grid.Row="1"  Margin="70,5,5,5"/>
+        <Button Name="btnCalculateSalesStatistics" Content="Calculate/Refresh" Grid.Row="1" Grid.Column="2" Height="30" Margin="5" Click="btnCalculateSalesStatistics_Click" />
+        <DataGrid Name="dgAnalytics" Grid.ColumnSpan="3" Grid.Row="2">
+            <DataGrid.Columns>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="btnBack" Content="Back to menu" Width="150" Height="25"  Grid.Row="3" Grid.Column="0" Click="btnBack_Click" ></Button>
+    </Grid>
+</UserControl>

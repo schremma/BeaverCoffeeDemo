@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="BeaverCoffeeDemo.Start"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BeaverCoffeeDemo"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="650">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.15*"/>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="0.15*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Set defaults for session" Grid.Row="0" Grid.Column="1" Padding="30,15">
+            <GroupBox.ToolTip>
+                <ToolTip>
+                    <TextBlock>To get started, select your location</TextBlock>
+                </ToolTip>
+            </GroupBox.ToolTip>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.25*"/>
+                </Grid.RowDefinitions>
+                <GroupBox Header="Location"  Grid.Row="0" Grid.Column="0">
+                    <GroupBox.ToolTip>
+                        <ToolTip>
+                            <TextBlock>To reach the menu of options, select your location first, followed by the employee position</TextBlock>
+                        </ToolTip>
+                    </GroupBox.ToolTip>
+                    <ComboBox Name="cbLocation" Height="22" Width="150" 
+                  ItemsSource="{Binding Path=Locations}"
+                                DisplayMemberPath="Name"
+                                SelectedValuePath="Name" SelectionChanged="cbLocation_SelectionChanged" />
+                </GroupBox>
+                <GroupBox Header="Shop" Grid.Row="1" Grid.Column="0">
+                    <GroupBox.ToolTip>
+                        <ToolTip>
+                            <TextBlock>To register a coffee shop order, select the specific shop where the order is placed</TextBlock>
+                        </ToolTip>
+                    </GroupBox.ToolTip>
+                    <ComboBox Name="cbShops" IsEnabled="False" DisplayMemberPath="ShopDescription" SelectedValuePath="Id" Height="22" Width="200" SelectionChanged="cbShops_SelectionChanged" />
+                </GroupBox>
+                <GroupBox Header="Employee position"  Grid.Column="0" Grid.Row="2" Margin="5, 10" Height="Auto">
+                    <GroupBox.ToolTip>
+                        <ToolTip>
+                            <TextBlock>Different employee positions have different access rights.Select Corporate... access to the complete set of options available under the menu</TextBlock>
+                        </ToolTip>
+                    </GroupBox.ToolTip>
+                    <StackPanel Name="stackEmployeeType" IsEnabled="False" HorizontalAlignment="Center">
+                    <RadioButton Name="rbShopEmployee" IsChecked="True" Checked="rbShopEmployee_Checked" >Shop employee</RadioButton>
+                    <RadioButton Name="rbManager" Checked="rbManager_Checked">Location manager</RadioButton>
+                        <RadioButton Name="rbCorporateManager" Checked="rbCorporateManager_Checked">Corporate sales manager</RadioButton>
+                </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Select employee" Grid.Column="0" Grid.Row="3">
+                    <ComboBox Name="cbEmployees" IsEnabled="False" ItemsSource="{Binding Employees}" DisplayMemberPath="Name" Width="170" Height="25" SelectionChanged="cbEmployees_SelectionChanged" />
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+        <Button Name="btnSeedDb" Content="Insert demo data" Grid.Row="2" Grid.Column="1" Width="170" Height="25" Click="btnSeedDb_Click" HorizontalAlignment="Left"></Button>
+        <Button Name="btnToMenu" Content="Go to the menu" IsEnabled="False" Grid.Row="2" Grid.Column="1" Width="170" Height="25" Click="btnToMenu_Click" HorizontalAlignment="Right" FontWeight="SemiBold" Background="#FFF5EFEF" ></Button>
+    </Grid>
+</UserControl>

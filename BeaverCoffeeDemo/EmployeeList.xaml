@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="BeaverCoffeeDemo.EmployeeList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BeaverCoffeeDemo.ValidationRules"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.35*"/>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.3*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Select location" Grid.Column="0" Grid.Row="0"/>
+        <ComboBox Name="cbLocation" Grid.Row="0" Grid.Column="1" Height="22" Width="150" 
+                  ItemsSource="{Binding Path=Locations}"
+                                DisplayMemberPath="Name"
+                                SelectedValuePath="Name"
+                                SelectedIndex="0"
+                                IsSynchronizedWithCurrentItem="True"
+                                SelectionChanged="cbLocation_SelectionChanged" />
+        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Name="dgEmployees" AutoGenerateColumns="False" CanUserAddRows="True" ItemsSource="{Binding Employees}"  Width="Auto" Margin="20,5" Height="Auto"
+                  SelectionMode="Single" AddingNewItem="dgEmployees_AddingNewItem" RowEditEnding="dgEmployees_RowEditEnding" SelectionChanged="dgEmployees_SelectionChanged" >
+            <DataGrid.RowValidationRules>
+                <local:EmployeeValidation ValidationStep="UpdatedValue"/>
+            </DataGrid.RowValidationRules>
+            <DataGrid.RowValidationErrorTemplate>
+                <ControlTemplate>
+                    <Grid Margin="0,-2,0,-2"
+      ToolTip="{Binding RelativeSource={RelativeSource
+      FindAncestor, AncestorType={x:Type DataGridRow}},
+      Path=(Validation.Errors)[0].ErrorContent}">
+                        <Ellipse StrokeThickness="0" Fill="Red" 
+        Width="{TemplateBinding FontSize}" 
+        Height="{TemplateBinding FontSize}" />
+                        <TextBlock Text="!" FontSize="{TemplateBinding FontSize}" 
+        FontWeight="Bold" Foreground="White" 
+        HorizontalAlignment="Center"  />
+                    </Grid>
+                </ControlTemplate>
+            </DataGrid.RowValidationErrorTemplate>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Name, UpdateSourceTrigger=LostFocus}" Header="Name" Width="120" />
+                <DataGridTextColumn Binding="{Binding Path=PersonalId, UpdateSourceTrigger=LostFocus}" Header="Id" Width="80" />
+                <DataGridTextColumn Binding="{Binding Path=HireDate, UpdateSourceTrigger=LostFocus}" Header="Hired" Width="80"/>
+                <DataGridTextColumn Binding="{Binding Path=Address.Street, UpdateSourceTrigger=LostFocus}" Header="Street" Width="80" />
+                <DataGridTextColumn Binding="{Binding Path=Address.City, UpdateSourceTrigger=LostFocus}" Header="City" Width="80" />
+                <DataGridTextColumn Binding="{Binding Path=Address.Zip, UpdateSourceTrigger=LostFocus}" Header="Zip" Width="80" />
+                <DataGridTextColumn Binding="{Binding Path=Address.Country, UpdateSourceTrigger=LostFocus}" Header="Country" Width="80" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Name="dgPositions" AutoGenerateColumns="False" ItemsSource="{Binding EmployeesPositions}"  Width="Auto" Margin="20,5" Height="Auto" AddingNewItem="dgPositions_AddingNewItem" RowEditEnding="dgPositions_RowEditEnding"
+                  SelectionMode="Single" SelectionChanged="dgPositions_SelectionChanged">
+            <DataGrid.RowValidationRules>
+                <local:PositionValidation ValidationStep="UpdatedValue"/>
+            </DataGrid.RowValidationRules>
+            <DataGrid.RowValidationErrorTemplate>
+                <ControlTemplate>
+                    <Grid Margin="0,-2,0,-2"
+      ToolTip="{Binding RelativeSource={RelativeSource
+      FindAncestor, AncestorType={x:Type DataGridRow}},
+      Path=(Validation.Errors)[0].ErrorContent}">
+                        <Ellipse StrokeThickness="0" Fill="Red" 
+        Width="{TemplateBinding FontSize}" 
+        Height="{TemplateBinding FontSize}" />
+                        <TextBlock Text="!" FontSize="{TemplateBinding FontSize}" 
+        FontWeight="Bold" Foreground="White" 
+        HorizontalAlignment="Center"  />
+                    </Grid>
+                </ControlTemplate>
+            </DataGrid.RowValidationErrorTemplate>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Position, UpdateSourceTrigger=PropertyChanged}" Header="Position" Width="120"/>
+                <DataGridTemplateColumn Header="Start date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=StartDate}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=StartDate}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Path=EndDate, UpdateSourceTrigger=PropertyChanged}" Header="End date" Width="80"/>
+                <DataGridTextColumn Binding="{Binding Path=FullTimeProcent, UpdateSourceTrigger=PropertyChanged}" Header="Full time %" Width="80" />
+                <DataGridTextColumn Binding="{Binding Path=WorkLocation, UpdateSourceTrigger=PropertyChanged}" Header="Location" Width="80" />
+                <DataGridTextColumn Binding="{Binding Path=ShopId, UpdateSourceTrigger=PropertyChanged}" Header="Shop id" Width="80" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="btnDelete" Content="Delete selected employee" Grid.Row="3" Grid.Column="0" Width="150" Height="30" Click="btnDelete_Click" Background="#FFF5EFEF"/>
+        <Button Name="btnDeletePosition" Content="Delete selected position" Grid.Row="4" Grid.Column="0" Width="150" Height="30" Background="#FFF5EFEF" Click="btnDeletePosition_Click"  />
+        <GroupBox Name="containerCoffeeShop" Header="Associate coffee shop with position" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.5*"/>
+                </Grid.RowDefinitions>
+                <Label Name="lblShopAssociatedWithPosition" Grid.Row="0" Grid.ColumnSpan="2"/>
+                <ComboBox Name="cbShops" DisplayMemberPath="ShopDescription" SelectedValuePath="Id" Grid.Row="1" Grid.Column="0"  Width="auto" Height="25" />
+                <Button Name="btnAddShopToPosition" Content="Add shop to position" Grid.Row="1"  Width="150" Height="25" Background="#FFF5EFEF" Grid.Column="1" Click="btnAddShopToPosition_Click" />
+            </Grid>
+        </GroupBox>
+        <Button Name="btnBack" Content="Back to menu" Width="150" Height="25"  Grid.Row="5" Grid.Column="0" Click="btnBack_Click" ></Button>
+    </Grid>
+</UserControl>

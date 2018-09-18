@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="BeaverCoffeeDemo.MainMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BeaverCoffeeDemo"
+        mc:Ignorable="d"
+        Height="400" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="0.15*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Current settings" Grid.Row="0" Grid.ColumnSpan="2">
+            <Label Name="lblShop" Margin="5"/>
+        </GroupBox>
+        <Button Name="btnAddCustomer" Content="Register new customer" Grid.Row="1" Grid.Column="1" Width="170" Height="25" Background="#FFF5EFEF" FontWeight="SemiBold"  Click="btnAddCustomer_Click" />
+        <Button Name="btnProductRange" Content="List products" Grid.Row="2" Grid.Column="1"  Width="170" Height="25" Background="#FFF5EFEF" FontWeight="SemiBold"  Click="btnProductRange_Click" ></Button>
+        <Button Name="btnOrder" Content="Register order" Grid.Column="0" Grid.Row="1"  Width="170" Height="25" Background="#FFF5EFEF" FontWeight="SemiBold"  Click="btnOrder_Click" />
+        <Button Name="btnComment" Content="Add comment to employee" Grid.Column="1" Grid.Row="3"  Width="170" Height="25" Background="#FFF5EFEF" FontWeight="SemiBold" Click="btnComment_Click" />
+        <Button Name="btnEmployeeList" Content="List employees" Grid.Row="3" Grid.Column="0"  Width="170" Height="25" Background="#FFF5EFEF" FontWeight="SemiBold" Click="btnEmployeeList_Click"></Button>
+        <Button Name="btnViewOrders" Content="View Orders" Grid.Row="4" Grid.Column="1"  Width="170" Height="25" Background="#FFF5EFEF" FontWeight="SemiBold"  Click="btnViewOrders_Click" />
+        <Button Name="btnManageStockItmes" Content="Manage stock items"  Grid.Row="2" Grid.Column="0" Width="170" Height="25" Background="#FFF5EFEF" FontWeight="SemiBold" Click="btnManageStockItmes_Click"></Button>
+        <Button Name="btnAnalytics" Content="View analytics" Grid.Row="4" Grid.Column="0"  Width="170" Height="25" Background="#FFF5EFEF" FontWeight="SemiBold" Click="btnAnalytics_Click" />
+        <Button Name="btnBack" Content="Back to settings"  Grid.Row="5" Grid.Column="0"  Width="170" Height="25" Background="#FFF5EFEF" FontWeight="SemiBold" Click="btnBack_Click"  />
+    </Grid>
+</UserControl>

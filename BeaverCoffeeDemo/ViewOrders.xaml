@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="BeaverCoffeeDemo.ViewOrders"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BeaverCoffeeDemo"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="650">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Location: " Grid.Column="0" Grid.Row="0" Margin="5" Width="Auto"/>
+        <ComboBox Name="cbLocations"  ItemsSource="{Binding Locations}" DisplayMemberPath="Name" Grid.Column="0" Grid.Row="0" Margin="65,5,0,5" Height="30" Width="150"  SelectionChanged="cbLocations_SelectionChanged" />
+        <Label Content="Employee: " Grid.Column="1" Grid.Row="0" Margin="5" Width="Auto"/>
+        <ComboBox Name="cbShopEmployees" ItemsSource="{Binding ShopEmployees}" DisplayMemberPath="Name" Grid.Column="1" Grid.Row="0" Margin="65,5,0,5" Height="30" Width="150" SelectionChanged="cbShopEmployees_SelectionChanged"  />
+        <Label Content="Start date" Grid.Row="1"/>
+        <DatePicker Name="datePickerStart" Margin="80,5,50,5" Grid.Row="1" IsEnabled="False"/>
+        <Label Content="End date" Grid.Column="1" Grid.Row="1"/>
+        <DatePicker Name="datePickerEnd" Grid.Column="1" Grid.Row="1" Margin="80,5,50,5" IsEnabled="False"/>
+        <Button Name="btnFilterByDate" Content="Filter by date" IsEnabled="False" Grid.Row="1" Grid.Column="2" Height="30" Margin="5" Click="btnFilterByDate_Click"  />
+        <DataGrid Name="dgOrders"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False" ItemsSource="{Binding Orders}"  Width="Auto" Margin="20" Height="Auto" SelectionMode="Single" SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="150" IsReadOnly="True" />
+            <DataGridTextColumn Binding="{Binding Path=TotalString}" Header="Total" Width="80" IsReadOnly="True" />
+                <DataGridTemplateColumn Header="Products" Width="150" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" 
+                           TextWrapping="Wrap"
+                           Text="{Binding Path=ProductDetails}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+                <DataGridTemplateColumn Header="Customer" Width="150" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" 
+                           TextWrapping="Wrap"
+                           Text="{Binding Path=CustomerDetails}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="btnBack" Content="Back to menu" Width="150" Height="25"  Grid.Row="3" Grid.Column="0" Click="btnBack_Click" ></Button>
+        <Button Name="btnDelete" Content="Delete selected order" Width="150" Height="25"  Grid.Row="3" Grid.Column="1" Click="btnDelete_Click" ></Button>
+
+    </Grid>
+</UserControl>

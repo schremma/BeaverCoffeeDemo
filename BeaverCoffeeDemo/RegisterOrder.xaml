@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="BeaverCoffeeDemo.RegisterOrder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BeaverCoffeeDemo"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="650">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.3*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Employee: " Grid.Column="0" Grid.Row="0" Margin="20, 5" Width="Auto"/>
+        <ComboBox Name="cbShopEmployees" ItemsSource="{Binding ShopEmployees}" DisplayMemberPath="Name" Grid.Column="0" Grid.Row="0" Margin="5" Height="30" Width="150" HorizontalAlignment="Right" />
+        <Label Content="Customer: " Grid.Column="1" Grid.Row="0" Margin="20, 5" Width="Auto"/>
+        <ComboBox Name="cbLocationCustomers" ItemsSource="{Binding LocationCustomers}" DisplayMemberPath="Name" Grid.Column="2" Grid.Row="0" Margin="5" Height="30" Width="150"  />
+
+        <GroupBox Header="Select product"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.7*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Name="cbProducts" ItemsSource="{Binding Products}" DisplayMemberPath="Name" Margin="20,0" Height="30" Width="300"/>
+                <Button Name="bntAddOrderItem" Grid.Column="1" Content="Add item" Height="30" Width="150" Click="bntAddOrderItem_Click" />
+            </Grid>
+        </GroupBox>
+        <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Name="dgBeverages" AutoGenerateColumns="False" ItemsSource="{Binding OrderItmes}"  Width="Auto" Margin="20" Height="Auto"
+                  SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" Width="150" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Path=Price}" Header="Price" Width="80" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Path=Unit}" Header="Unit" Width="50"/>
+                <DataGridTextColumn Binding="{Binding Path=Ingredients.MilkTypeIngredients.SelectedOption.Name }" Header="Milk" Width="80" IsReadOnly="True" />
+                <DataGridTemplateColumn Header="Milk option">
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox Name="cbMilkOptions" Height="22" ItemsSource="{Binding Path=Ingredients.MilkTypeIngredients.Options}"
+                                DisplayMemberPath="Name"
+                                SelectedValuePath="Name" SelectionChanged="cbMilkOptions_SelectionChanged"
+                                />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Extra option">
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox Name="cbExtraOptions" Height="22" ItemsSource="{Binding Path=Ingredients.ExtraIngredients}"
+                                DisplayMemberPath="Name"
+                                SelectedValuePath="Name"
+                                Text="Name" SelectionChanged="cbExtraOptions_SelectionChanged"
+                                />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="btnRemoveItem" Grid.Row="3" Grid.Column="3" Content="Remove selected item" Height="30" Width="150" Margin="20,5" Click="btnRemoveItem_Click"/>
+        <Label Name="lblOrderTotal" Content="Total: " Grid.Column="0" Grid.Row="3" Margin="20,5" FontSize="14" FontWeight="SemiBold" />
+        <Button Name="btnBack" Content="Back to menu" Width="150" Height="25"  Grid.Row="5" Grid.Column="0" Margin="20,5" HorizontalAlignment="Left" Click="btnBack_Click" ></Button>
+        <Button Name="btnCreateOrder" Grid.Row="4" Grid.Column="0" Content="Create order" Height="30" Width="150" Margin="20,5" HorizontalAlignment="Left"  Click="btnCreateOrder_Click" />
+    </Grid>
+</UserControl>
